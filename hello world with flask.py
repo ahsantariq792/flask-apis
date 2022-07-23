@@ -1,12 +1,31 @@
-from flask import Flask
-import threading, webbrowser
+from flask import Flask, request
+# from flask_cors import CORS
 
 app = Flask(__name__)
+# CORS(app)
 
 
 @app.route('/name')
 def hello():
     return f'Hello, World'
+
+
+@app.route('/aa')
+def hello():
+    return {
+        'Name': "geek",
+        "Age": "22",
+        "Date": 'aaaaa',
+        "programming": "python"
+    }
+
+
+# getting response
+@app.route('/bb', methods=["POST"])
+def hi():
+    todo_data = request.data
+    print(todo_data)
+    return todo_data
 
 
 # passing name
@@ -15,9 +34,5 @@ def hello(name):
     return f'Hello, World {name}'
 
 
-port = 5000
-url = "http://127.0.0.1:{0}".format(port)
-
-threading.Timer(1.25, lambda: webbrowser.open(url)).start()
-
-app.run(port=port, debug=False)
+if __name__ == "__main__":
+    app.run(debug=True)
